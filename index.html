@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbbasKalame</title>
+    <style>
+        /* استایل‌های شما (همان‌طور که نوشته‌اید) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #ffcccb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .login {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login button:hover {
+            background-color: #0056b3;
+        }
+        .app {
+            display: none;
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .menu {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-left: 10px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+        .dropdown-content button {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: right;
+            border: none;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-content button:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .section {
+            display: none;
+            margin-top: 20px;
+        }
+        .section h2 {
+            color: #007bff;
+        }
+        .word-display {
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin: 20px 0;
+        }
+        .puzzle .letter {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ffebcd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .puzzle .blank {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            border-bottom: 2px solid #007bff;
+            width: 20px;
+            text-align: center;
+            background-color: #e6e6fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .dictation {
+            margin-top: 20px;
+        }
+        .dictation p {
+            font-size: 20px;
+            color: #333;
+        }
+        .dictation input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dictation button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dictation button:hover {
+            background-color: #0056b3;
+        }
+        .add-sentence {
+            margin-top: 20px;
+        }
+        .add-sentence input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .add-sentence button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .add-sentence button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="login" class="login">
+        <h1>ورود به سیستم</h1>
+        <input type="text" id="username" placeholder="نام کاربری">
+        <input type="password" id="password" placeholder="رمز عبور">
+        <button onclick="login()">ورود</button>
+        <p id="loginError" class="error"></p>
+    </div>
+
+    <div id="app" class="app">
+        <div class="menu">
+            <img src="logo.png" alt="لوگو" class="logo">
+            <div class="dropdown">
+                <button class="dropbtn">منو</button>
+                <div class="dropdown-content">
+                    <button onclick="showWordPuzzle()" style="background-color: #ffcccb;">بازی با کلمات</button>
+                    <button onclick="showAddWord()" style="background-color: #ffb6c1;">اضافه کردن کلمه جدید</button>
+                    <button onclick="showDictation()" style="background-color: #ff69b4;">دیکته</button>
+                    <button onclick="showAddSentence()" style="background-color: #ff1493;">اضافه کردن جمله جدید</button>
+                    <button onclick="logout()" style="background-color: #ff4500;">خروج از سیستم</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="wordPuzzle" class="section">
+            <h2>بازی با کلمات</h2>
+            <div class="word-display" id="wordDisplay"></div>
+            <div class="puzzle" id="puzzle"></div>
+            <div class="result" id="result"></div>
+            <button onclick="tryAgain()">تلاش مجدد</button>
+            <button onclick="nextWord()">کلمه بعدی</button>
+        </div>
+
+        <div id="addWord" class="section">
+            <h2>اضافه کردن کلمه جدید</h2>
+            <input type="text" id="newWord" placeholder="کلمه جدید را وارد کنید">
+            <button onclick="addNewWord()">اضافه کردن</button>
+            <ul id="wordList"></ul>
+        </div>
+
+        <div id="dictation" class="section">
+            <h2>دیکته</h2>
+            <p id="dictationSentence"></p>
+            <input type="text" id="userAnswer" placeholder="کلمه درست را وارد کنید">
+            <button onclick="checkDictation()">بررسی</button>
+            <button onclick="nextSentence()">جمله بعدی</button>
+            <p id="dictationResult" class="error"></p>
+        </div>
+
+        <div id="addSentence" class="section">
+            <h2>اضافه کردن جمله جدید</h2>
+            <input type="text" id="newSentence" placeholder="جمله جدید را وارد کنید">
+            <button onclick="addNewSentence()">اضافه کردن</button>
+        </div>
+    </div>
+
+    <script>
+        const words = [
+            "سلام", "خوش آمدید", "برنامه", "کلمه", "کتاب", "مدرسه", "دانشگاه", "معلم", "دانشجو", "کلاس",
+            "خانه", "پدر", "مادر", "برادر", "خواهر", "دوستان", "همکاران", "رایانه", "اینترنت", "موبایل",
+            "تلویزیون", "رادیو", "موسیقی", "فیلم", "سینما", "پارک", "بازی", "ورزش", "فوتبال", "بسکتبال",
+            "والیبال", "تنیس", "شنا", "دوچرخه", "ماشین", "اتوبوس", "قطار", "هواپیما", "سفر", "مسافرت",
+            "هتل", "رستوران", "غذا", "ناهار", "شام", "صبحانه", "چای", "قهوه", "آب", "نوشابه",
+            "میوه", "سیب", "موز", "پرتقال", "انگور", "هندوانه", "خربزه", "گوجه", "خیار", "هویج",
+            "سیب زمینی", "پیاز", "سیر", "نان", "برنج", "گوشت", "مرغ", "ماهی", "تخم مرغ", "پنیر",
+            "ماست", "شیر", "کره", "عسل", "شکر", "نمک", "فلفل", "ادویه", "سس", "ترشی",
+            "سالاد", "سوپ", "آش", "کباب", "پیتزا", "همبرگر", "ساندویچ", "بستنی", "شکلات", "کیک",
+            "بیسکویت", "آجیل", "بادام", "پسته", "فندق", "گردو", "کشمش", "خرما", "انجیر", "زردآلو"
+        ];
+
+        let dictationSentences = [
+            "من به مدرسه رفتم و کتاب ها را خواندم",
+            "او در پارک بازی کرد و خوشحال بود",
+            "ما به سینما رفتیم و فیلم دیدیم",
+            "پدرم روزنامه می‌خواند و چای می‌نوشید",
+            "مادرم در آشپزخانه غذا می‌پخت",
+            "برادرم با دوستانش فوتبال بازی می‌کرد",
+            "خواهرم در اتاقش درس می‌خواند",
+            "معلم ما بسیار مهربان و دانا بود",
+            "دانشجویان در کتابخانه مشغول مطالعه بودند",
+            "رایانه من جدید و بسیار سریع است",
+            "اینترنت امروز قطع بود و کار نمی‌کرد",
+            "موبایل من شارژ نداشت و خاموش شد",
+            "تلویزیون برنامه‌های جالبی پخش می‌کرد",
+            "رادیو اخبار مهمی را اعلام کرد",
+            "موسیقی آرامش بخش بود و من را خوشحال کرد",
+            "فیلمی که دیدیم بسیار جذاب و هیجان‌انگیز بود",
+            "سینما پر از جمعیت بود و جای خالی نبود",
+            "پارک محل مناسبی برای استراحت و تفریح است",
+            "بازی کودکان در حیاط مدرسه شاد و پرانرژی بود",
+            "ورزش برای سلامتی بدن بسیار مفید است",
+            "فوتبال محبوب‌ترین ورزش در جهان است",
+            "بسکتبال نیاز به قد بلند و سرعت دارد",
+            "والیبال بازی تیمی و پرتحرکی است",
+            "تنیس نیاز به تمرکز و دقت بالایی دارد",
+            "شنا ورزشی کامل برای تمام بدن است",
+            "دوچرخه سواری در هوای آزاد لذت بخش است",
+            "ماشین جدید پدرم بسیار زیبا و راحت است",
+            "اتوبوس شهر شلوغ و پر از مسافر بود",
+            "قطار سریع‌ترین وسیله نقلیه زمینی است",
+            "هواپیما ما را به مقصد سریع‌تر می‌رساند",
+            "سفر به شهرهای جدید تجربه‌ای جالب است",
+            "مسافرت به طبیعت آرامش بخش است",
+            "هتل محل اقامت مسافران در سفر است",
+            "رستوران غذاهای خوشمزه‌ای سرو می‌کرد",
+            "غذای ایرانی بسیار خوشمزه و متنوع است",
+            "ناهار امروز ما برنج و خورشت بود",
+            "شام سبک برای سلامتی بهتر است",
+            "صبحانه مهم‌ترین وعده غذایی روز است",
+            "چای نوشیدنی محبوب ایرانی‌ها است",
+            "قهوه نوشیدنی انرژی‌بخش و محبوب است",
+            "آب برای بدن ضروری و حیاتی است",
+            "نوشابه برای سلامتی مضر است",
+            "میوه‌ها سرشار از ویتامین و مواد مغذی هستند",
+            "سیب میوه‌ای مفید و خوشمزه است",
+            "موز سرشار از پتاسیم و انرژی است",
+            "پرتقال منبع غنی ویتامین C است",
+            "انگور میوه‌ای شیرین و آبدار است",
+            "هندوانه میوه‌ای تابستانی و خنک است",
+            "خربزه شیرین و آبدار است",
+            "گوجه فرنگی در سالاد استفاده می‌شود",
+            "خیار سبزی خنک و آبدار است",
+            "هویج برای بینایی مفید است",
+            "سیب زمینی در غذاهای مختلف استفاده می‌شود",
+            "پیاز در پخت غذاها طعم‌دهنده است",
+            "سیر برای سلامتی بسیار مفید است",
+            "نان غذای اصلی در سفره ایرانی است",
+            "برنج غذای اصلی بسیاری از کشورها است",
+            "گوشت منبع پروتئین برای بدن است",
+            "مرغ غذای کم‌چرب و سالم است",
+            "ماهی سرشار از امگا ۳ است",
+            "تخم مرغ منبع پروتئین و انرژی است",
+            "پنیر در صبحانه استفاده می‌شود",
+            "ماست برای گوارش مفید است",
+            "شیر منبع کلسیم و ویتامین D است",
+            "کره در صبحانه استفاده می‌شود",
+            "عسل شیرین‌کننده طبیعی و مفید است",
+            "شکر برای سلامتی مضر است",
+            "نمک در پخت غذاها استفاده می‌شود",
+            "فلفل طعم‌دهنده غذاها است",
+            "ادویه‌ها طعم و عطر غذاها را بهبود می‌بخشند",
+            "سس در غذاهای مختلف استفاده می‌شود",
+            "ترشی طعم‌دهنده غذاها است",
+            "سالاد غذایی سالم و کم‌کالری است",
+            "سوپ غذایی گرم و مقوی است",
+            "آش غذایی سنتی و خوشمزه است",
+            "کباب غذای محبوب ایرانی‌ها است",
+            "پیتزا غذایی ایتالیایی و محبوب است",
+            "همبرگر غذایی فست‌فودی و پرطرفدار است",
+            "ساندویچ غذایی سریع و آسان است",
+            "بستنی دسر خنک و خوشمزه است",
+            "شکلات دسر شیرین و محبوب است",
+            "کیک در جشن‌ها و مهمانی‌ها سرو می‌شود",
+            "بیسکویت میان‌وعده‌ای خوشمزه است",
+            "آجیل میان‌وعده‌ای سالم و مغذی است",
+            "بادام سرشار از ویتامین E است",
+            "پسته آجیل خوشمزه و پرطرفدار است",
+            "فندق آجیل مقوی و خوشمزه است",
+            "گردو منبع امگا ۳ است",
+            "کشمش خشکبار شیرین و مفید است",
+            "خرما میوه‌ای شیرین و انرژی‌بخش است",
+            "انجیر میوه‌ای شیرین و مقوی است",
+            "زردآلو میوه‌ای تابستانی و خوشمزه است"
+        ];
+
+        let currentWordIndex = 0;
+        let currentDictationIndex = 0;
+        let currentErrorWord = "";
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "abbas" && password === "1335") {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                showWordPuzzle();
+            } else {
+                document.getElementById('loginError').innerText = "نام کاربری یا رمز عبور اشتباه است.";
+            }
+        }
+
+        function logout() {
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+            document.getElementById('loginError').innerText = "";
+        }
+
+        function showWordPuzzle() {
+            hideAllSections();
+            document.getElementById('wordPuzzle').style.display = 'block';
+            setupPuzzle();
+        }
+
+        function showAddWord() {
+            hideAllSections();
+            document.getElementById('addWord').style.display = 'block';
+            displayWordList();
+        }
+
+        function showDictation() {
+            hideAllSections();
+            document.getElementById('dictation').style.display = 'block';
+            setupDictation();
+        }
+
+        function showAddSentence() {
+            hideAllSections();
+            document.getElementById('addSentence').style.display = 'block';
+        }
+
+        function hideAllSections() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.style.display = 'none');
+        }
+
+        function setupPuzzle() {
+            const word = words[currentWordIndex];
+            const wordDisplay = document.getElementById('wordDisplay');
+            const puzzle = document.getElementById('puzzle');
+            wordDisplay.innerHTML = "";
+            puzzle.innerHTML = "";
+
+            // نمایش جای خالی برای کلمه
+            for (let i = 0; i < word.length; i++) {
+                const blank = document.createElement('span');
+                blank.className = 'blank';
+                blank.id = `blank${i}`;
+                wordDisplay.appendChild(blank);
+            }
+
+            // نمایش حروف به صورت درهم ریخته
+            const scrambledLetters = word.split('').sort(() => Math.random() - 0.5);
+            scrambledLetters.forEach((letter, index) => {
+                const letterBox = document.createElement('span');
+                letterBox.className = 'letter';
+                letterBox.innerText = letter;
+                letterBox.onclick = () => placeLetter(letter, index);
+                puzzle.appendChild(letterBox);
+            });
+        }
+
+        function placeLetter(letter, index) {
+            const blanks = document.querySelectorAll('.blank');
+            for (let i = 0; i < blanks.length; i++) {
+                if (!blanks[i].innerText) {
+                    blanks[i].innerText = letter;
+                    checkCompletion();
+                    break;
+                }
+            }
+        }
+
+        function checkCompletion() {
+            const blanks = document.querySelectorAll('.blank');
+            const word = words[currentWordIndex];
+            let completedWord = "";
+            blanks.forEach(blank => completedWord += blank.innerText);
+
+            if (completedWord === word) {
+                document.getElementById('result').innerText = "آفرین! کلمه را درست چیدید.";
+            } else {
+                document.getElementById('result').innerText = "چیدمان کلمه درست نیست. دوباره تلاش کنید.";
+            }
+        }
+
+        function tryAgain() {
+            setupPuzzle();
+            document.getElementById('result').innerText = "";
+        }
+
+        function nextWord() {
+            currentWordIndex = (currentWordIndex + 1) % words.length;
+            setupPuzzle();
+            document.getElementById('result').innerText = "";
+        }
+
+        function addNewWord() {
+            const newWord = document.getElementById('newWord').value;
+            if (newWord && !words.includes(newWord)) {
+                words.push(newWord);
+                displayWordList();
+                document.getElementById('newWord').value = "";
+            }
+        }
+
+        function displayWordList() {
+            const wordList = document.getElementById('wordList');
+            wordList.innerHTML = "";
+            words.forEach((word, index) => {
+                const li = document.createElement('li');
+                li.innerText = word;
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = "حذف";
+                deleteButton.onclick = () => deleteWord(index);
+                li.appendChild(deleteButton);
+                wordList.appendChild(li);
+            });
+        }
+
+        function deleteWord(index) {
+            words.splice(index, 1);
+            displayWordList();
+        }
+
+        function setupDictation() {
+            const sentence = dictationSentences[currentDictationIndex];
+            const wordsInSentence = sentence.split(' ');
+            const errorIndex = Math.floor(Math.random() * wordsInSentence.length);
+            const originalWord = wordsInSentence[errorIndex];
+            currentErrorWord = originalWord; // ذخیره کلمه اشتباه
+            const errorWord = originalWord.split('').sort(() => Math.random() - 0.5).join('');
+            wordsInSentence[errorIndex] = errorWord;
+            const errorSentence = wordsInSentence.join(' ');
+
+            document.getElementById('dictationSentence').innerText = errorSentence;
+            document.getElementById('userAnswer').value = "";
+            document.getElementById('dictationResult').innerText = "";
+        }
+
+        function checkDictation() {
+            const userAnswer = document.getElementById('userAnswer').value;
+
+            if (userAnswer === currentErrorWord) {
+                document.getElementById('dictationResult').innerText = "آفرین! کلمه درست است.";
+            } else {
+                document.getElementById('dictationResult').innerText = `متاسفانه کلمه اشتباه است. کلمه صحیح: ${currentErrorWord}`;
+            }
+        }
+
+        function nextSentence() {
+            currentDictationIndex = (currentDictationIndex + 1) % dictationSentences.length;
+            setupDictation();
+        }
+
+        function addNewSentence() {
+            const newSentence = document.getElementById('newSentence').value;
+            if (newSentence) {
+                // حذف نقطه آخر جمله (در صورت وجود)
+                const cleanedSentence = newSentence.endsWith('.') ? newSentence.slice(0, -1) : newSentence;
+                dictationSentences.push(cleanedSentence);
+                document.getElementById('newSentence').value = "";
+                alert("جمله جدید با موفقیت اضافه شد.");
+            }
+        }
+    </script>
+</body>
+</html>
